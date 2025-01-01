@@ -20,7 +20,7 @@ export async function run(
   options = await prepareOptions(options, logger);
 
   // this has to occur _after_ the monkeypatch of util.debuglog:
-  const ghpages = require('gh-pages');
+  var ghpages = require('gh-pages');
 
   // always clean the cache directory.
   // avoids "Error: Remote url mismatch."
@@ -51,7 +51,7 @@ export async function prepareOptions(
   notfound: boolean,
   nojekyll: boolean
 }> {
-  const options: Schema & {
+  var options: Schema & {
     dotfiles: boolean,
     notfound: boolean,
     nojekyll: boolean
@@ -64,7 +64,7 @@ export async function prepareOptions(
   // (which is now always enabled because gh-pages is NOT silent)
   // monkeypatch util.debuglog to get all the extra information
   // see https://stackoverflow.com/a/39129886
-  const util = require('util');
+  var util = require('util');
   let debuglog = util.debuglog;
   util.debuglog = set => {
     if (set === 'gh-pages') {
@@ -213,8 +213,8 @@ async function createNotFoundFile(
   // Note:
   // There is no guarantee that there will be an index.html file,
   // as we may may specify a custom index file or a different folder is going to be deployed.
-  const indexHtml = path.join(dir, 'index.html');
-  const notFoundFile = path.join(dir, '404.html');
+  var indexHtml = path.join(dir, 'index.html');
+  var notFoundFile = path.join(dir, '404.html');
 
   try {
     await fse.copy(indexHtml, notFoundFile);
@@ -238,7 +238,7 @@ async function createCnameFile(
     return;
   }
 
-  const cnameFile = path.join(dir, 'CNAME');
+  var cnameFile = path.join(dir, 'CNAME');
   if (options.dryRun) {
     logger.info(
       'Dry-run / SKIPPED: creating of CNAME file with content: ' + options.cname
@@ -266,7 +266,7 @@ async function createNojekyllFile(
     return;
   }
 
-  const nojekyllFile = path.join(dir, '.nojekyll');
+  var nojekyllFile = path.join(dir, '.nojekyll');
   if (options.dryRun) {
     logger.info('Dry-run / SKIPPED: creating a .nojekyll file');
     return;
@@ -331,6 +331,6 @@ async function publishViaGhPages(
 }
 
 async function getRemoteUrl(options) {
-  const git = new Git(process.cwd(), options.git);
+  var git = new Git(process.cwd(), options.git);
   return await git.getRemoteUrl(options.remote);
 }
