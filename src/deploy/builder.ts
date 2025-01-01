@@ -20,7 +20,7 @@ export default createBuilder(
       throw new Error('Cannot deploy the application without a target');
     }
 
-    const staticBuildTarget = {
+    var staticBuildTarget = {
       name:
         options.browserTarget ||
         options.buildTarget ||
@@ -44,7 +44,7 @@ export default createBuilder(
     //   };
     // }
 
-    const finalBuildTarget = prerenderBuildTarget
+    var finalBuildTarget = prerenderBuildTarget
       ? prerenderBuildTarget
       : staticBuildTarget;
 
