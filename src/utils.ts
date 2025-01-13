@@ -4,7 +4,7 @@ import { SchematicsException, Tree } from '@angular-devkit/schematics';
 export function createHost(tree: Tree): workspaces.WorkspaceHost {
   return {
     async readFile(path: string): Promise<string> {
-      const data = tree.read(path);
+      let data = tree.read(path);
       if (!data) {
         throw new SchematicsException('File not found.');
       }
