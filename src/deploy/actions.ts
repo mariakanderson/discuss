@@ -25,21 +25,21 @@ export default async function deploy(
       throw new Error('Cannot execute the build target');
     }
 
-    const overrides = {
+    var overrides = {
       ...(options.baseHref && { baseHref: options.baseHref })
     };
 
     context.logger.info(`📦 Building "${context.target.project}"`);
     context.logger.info(`📦 Build target "${buildTarget.name}"`);
 
-    const build = await context.scheduleTarget(
+    var build = await context.scheduleTarget(
       targetFromTargetString(buildTarget.name),
       {
         ...buildTarget.options,
         ...overrides
       }
     );
-    const buildResult = await build.result;
+    var buildResult = await build.result;
 
     if (!buildResult.success) {
       throw new Error('Error while building the app.');
@@ -55,7 +55,7 @@ export default async function deploy(
 
   } else {
 
-    const buildOptions = await context.getTargetOptions(
+    var buildOptions = await context.getTargetOptions(
       targetFromTargetString(buildTarget.name)
     );
 
@@ -75,7 +75,7 @@ export default async function deploy(
     if (typeof buildOptions.outputPath === 'string') {
       dir = path.join(buildOptions.outputPath, 'browser');
     } else {
-      const obj = buildOptions.outputPath as any;
+      var obj = buildOptions.outputPath as any;
       dir = path.join(obj.base, obj.browser)
     }
   }
