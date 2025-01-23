@@ -10,12 +10,12 @@ interface NgAddOptions {
   project: string;
 }
 
-export let ngAdd = (options: NgAddOptions) => async (
+export const ngAdd = (options: NgAddOptions) => async (
   tree: Tree,
   _context: SchematicContext
 ) => {
-  let host = createHost(tree);
-  let { workspace } = await workspaces.readWorkspace('/', host);
+  const host = createHost(tree);
+  const { workspace } = await workspaces.readWorkspace('/', host);
 
   if (!options.project) {
     if (workspace.projects.size === 1) {
@@ -28,7 +28,7 @@ export let ngAdd = (options: NgAddOptions) => async (
     }
   }
 
-  let project = workspace.projects.get(options.project);
+  const project = workspace.projects.get(options.project);
   if (!project) {
     throw new SchematicsException(
       'The specified Angular project is not defined in this workspace'
