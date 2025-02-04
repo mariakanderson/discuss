@@ -2,9 +2,9 @@ import { SchematicContext, Tree } from '@angular-devkit/schematics';
 
 import { ngAdd } from './ng-add';
 
-const PROJECT_NAME = 'THEPROJECT';
-const PROJECT_ROOT = 'PROJECTROOT';
-const OTHER_PROJECT_NAME = 'OTHERPROJECT';
+var PROJECT_NAME = 'THEPROJECT';
+var PROJECT_ROOT = 'PROJECTROOT';
+var OTHER_PROJECT_NAME = 'OTHERPROJECT';
 
 describe('ng-add', () => {
   describe('generating files', () => {
@@ -16,24 +16,24 @@ describe('ng-add', () => {
     });
 
     it('generates new files if starting from scratch', async () => {
-      const result = await ngAdd({
+      var result = await ngAdd({
         project: PROJECT_NAME
       })(tree, {} as SchematicContext);
 
-      const actual = result.read('angular.json')!.toString();
+      var actual = result.read('angular.json')!.toString();
       expect(prettifyJSON(actual)).toMatchSnapshot();
     });
 
     it('overrides existing files', async () => {
-      const tempTree = await ngAdd({
+      var tempTree = await ngAdd({
         project: PROJECT_NAME
       })(tree, {} as SchematicContext);
 
-      const result = await ngAdd({
+      var result = await ngAdd({
         project: OTHER_PROJECT_NAME
       })(tempTree, {} as SchematicContext);
 
-      const actual = result.read('angular.json')!.toString();
+      var actual = result.read('angular.json')!.toString();
 
       expect(prettifyJSON(actual)).toMatchSnapshot();
     });
@@ -42,17 +42,17 @@ describe('ng-add', () => {
   describe('project selection', () => {
 
     it('should select the first project if there is only one', async () => {
-      const tree = Tree.empty();
-      const angularJSON = generateAngularJson();
+      var tree = Tree.empty();
+      var angularJSON = generateAngularJson();
       delete (angularJSON as any).projects[PROJECT_NAME]; // delete one project so that one is left
       tree.create('angular.json', JSON.stringify(angularJSON));
 
-      const resultTree = await ngAdd({ project: '' })(
+      var resultTree = await ngAdd({ project: '' })(
         tree,
         {} as SchematicContext
       );
 
-      const resultConfig = readJSONFromTree(resultTree, 'angular.json');
+      var resultConfig = readJSONFromTree(resultTree, 'angular.json');
       expect(
         resultConfig.projects[OTHER_PROJECT_NAME].architect.deploy
       ).toBeTruthy();
@@ -61,8 +61,8 @@ describe('ng-add', () => {
 
   describe('error handling', () => {
     it('should fail if there are multiple projects in workspace and project is not explicitly defined', async () => {
-      const tree = Tree.empty();
-      const angularJSON = generateAngularJson();
+      var tree = Tree.empty();
+      var angularJSON = generateAngularJson();
       tree.create('angular.json', JSON.stringify(angularJSON));
 
       await expect(
@@ -79,7 +79,7 @@ describe('ng-add', () => {
     });
 
     it('should throw if angular.json can not be parsed', async () => {
-      const tree = Tree.empty();
+      var tree = Tree.empty();
       tree.create('angular.json', 'hi');
 
       await expect(
@@ -88,7 +88,7 @@ describe('ng-add', () => {
     });
 
     it('should throw if specified project does not exist', async () => {
-      const tree = Tree.empty();
+      var tree = Tree.empty();
       tree.create('angular.json', JSON.stringify({ version: 1, projects: {} }));
 
       await expect(
@@ -99,7 +99,7 @@ describe('ng-add', () => {
     });
 
     it('should throw if specified project is not application', async () => {
-      const tree = Tree.empty();
+      var tree = Tree.empty();
       tree.create(
         'angular.json',
         JSON.stringify({
@@ -118,7 +118,7 @@ describe('ng-add', () => {
     });
 
     it('should throw if app does not have architect configured', async () => {
-      const tree = Tree.empty();
+      var tree = Tree.empty();
       tree.create(
         'angular.json',
         JSON.stringify({
