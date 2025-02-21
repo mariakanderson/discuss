@@ -1,4 +1,4 @@
-export const defaults = {
+export let defaults = {
   dir: 'dist',
   repo: undefined,
   message: 'Auto-generated commit',
