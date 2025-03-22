@@ -27,7 +27,7 @@ export default createBuilder(
         `${context.target.project}:build:production`
     };
 
-    const prerenderBuildTarget: BuildTarget | undefined;
+    let prerenderBuildTarget: BuildTarget | undefined;
     if (options.prerender) {
       prerenderBuildTarget = {
         name:
@@ -37,7 +37,7 @@ export default createBuilder(
     }
 
     // serverBuildTarget is not supported and is completely ignored
-    // const serverBuildTarget: BuildTarget | undefined;
+    // let serverBuildTarget: BuildTarget | undefined;
     // if (options.ssr) {
     //   serverBuildTarget = {
     //     name: options.serverTarget || options.universalBuildTarget || `${context.target.project}:server:production`
