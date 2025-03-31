@@ -11,10 +11,10 @@ import { BuildTarget } from '../interfaces';
 import deploy from './actions';
 
 let context: BuilderContext;
-const mockEngine = { run: (_: string, __: any, __2: any) => Promise.resolve() };
+var mockEngine = { run: (_: string, __: any, __2: any) => Promise.resolve() };
 
-const PROJECT = 'pirojok-project';
-const BUILD_TARGET: BuildTarget = {
+var PROJECT = 'pirojok-project';
+var BUILD_TARGET: BuildTarget = {
   name: `${PROJECT}:build:production`
 };
 
@@ -22,7 +22,7 @@ describe('Deploy Angular apps', () => {
   beforeEach(() => initMocks());
 
   it('should invoke the builder', async () => {
-    const spy = jest.spyOn(context, 'scheduleTarget');
+    var spy = jest.spyOn(context, 'scheduleTarget');
     await deploy(mockEngine, context, BUILD_TARGET, {});
 
     expect(spy).toHaveBeenCalledWith(
@@ -36,7 +36,7 @@ describe('Deploy Angular apps', () => {
   });
 
   it('should invoke the builder with the baseHref', async () => {
-    const spy = jest.spyOn(context, 'scheduleTarget');
+    var spy = jest.spyOn(context, 'scheduleTarget');
     await deploy(mockEngine, context, BUILD_TARGET, { baseHref: '/folder' });
 
     expect(spy).toHaveBeenCalledWith(
@@ -50,7 +50,7 @@ describe('Deploy Angular apps', () => {
   });
 
   it('should invoke engine.run', async () => {
-    const spy = jest.spyOn(mockEngine, 'run');
+    var spy = jest.spyOn(mockEngine, 'run');
     await deploy(mockEngine, context, BUILD_TARGET, {});
 
     expect(spy).toHaveBeenCalledWith('dist/some-folder/browser', {}, context.logger);
@@ -86,7 +86,7 @@ describe('Deploy Angular apps', () => {
   });
 });
 
-const initMocks = () => {
+var initMocks = () => {
   context = {
     target: {
       configuration: 'production',
@@ -122,7 +122,7 @@ const initMocks = () => {
   } as any;
 };
 
-const createBuilderOutputMock = (success: boolean): BuilderOutput => {
+var createBuilderOutputMock = (success: boolean): BuilderOutput => {
   return {
     info: { info: null },
     // unfortunately error is undefined in case of a build errors
